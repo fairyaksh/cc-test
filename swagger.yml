@@ -1,0 +1,116 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# User model path for CC
+paths:
+  /users:
+  # Read ALL users
+    get:
+      operationId: "users.read_all"
+      tags:
+        - "User"
+      summary: "Read the entire list of users"
+      description: "Read the list of users"
+      parameters:
+        - name: length # Numerical length of the users data
+          in: query
+          type: integer
+          description: Number of people to get from people
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering people
+      responses:
+        200:
+          description: "Successful read users list operation"
+          schema:
+            properties:
+              username:
+                type: string
+                description: Username of person to create
+              id:
+                type: integer
+                description: User's id
+              xid:
+                type: string
+                description: User's xid     
+              strategy:
+                type: string
+                description: Strategy the user chooses
+    # Create a user (CREATE one)    
+    post:
+      operationId: "users.create"
+      tags:
+        - "User"
+      summary: "Create a new user"
+      description: "Create a new user in the current list of users"
+      parameters:
+        - name: user_name
+          in: body
+          description: User to create
+          # type: string
+          # required: True
+        # - name: user_strategy
+        #   in: body
+        #   description: User's strategy
+        #   type: string
+        #   required: True
+          schema:
+            type: "object"
+            properties:
+              username:
+                type: string
+                description: Username of person to create
+              id:
+                type: integer
+                description: User's id
+              xid:
+                type: string
+                description: User's xid     
+              strategy:
+                type: string
+                description: Strategy the user chooses                                       
+      responses:
+        200:
+          description: "Successfully created new user"
+  # Retrieve a user (GET one)    
+  /users/{username}:
+    get:
+      operationId: "users.read_one"
+      tags:
+      - "User"
+      summary: "Read one user from an entire list of users"
+      description: "Read one user from an entire list of users"
+      parameters:
+        - name: username
+          in: path
+          description: Username of the user to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read user from USERS list
+          schema:
+            properties:
+              username:
+                type: string
+                description: Username of person to create
+              id:
+                type: integer
+                description: User's id
+              xid:
+                type: string
+                description: User's xid     
+              strategy:
+                type: string
+                description: Strategy the user chooses
